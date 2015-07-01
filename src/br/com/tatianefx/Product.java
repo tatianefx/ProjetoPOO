@@ -3,7 +3,7 @@ package br.com.tatianefx;
 
 import br.com.tatianefx.utils.Read;
 
-public class Products
+public class Product
 {
 	private String name;
 	private int code;

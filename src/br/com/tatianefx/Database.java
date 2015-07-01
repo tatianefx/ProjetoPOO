@@ -159,9 +159,9 @@ public abstract class Database
 		System.out.println("Estoque atualizado");
 	}
 
-	public static Products findProduct(int code)
+	public static Product findProduct(int code)
 	{
-		Products productFound = new Products();
+		Product productFound = new Product();
 
 		try {
 			stmt = connection.createStatement();
