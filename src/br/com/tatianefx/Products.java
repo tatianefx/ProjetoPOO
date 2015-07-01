@@ -5,24 +5,25 @@ import br.com.tatianefx.utils.Read;
 
 public class Products
 {
-	private String nome;
-	private String marca;
-	private float preco;
-	private String tipo;
-	private int quantidadeTotal;
-	private int quantidadeMinima;
-	private int quantidadeMaxima;
+	private String name;
+	private int code;
+	private String brand;
+	private float price;
+	private String category;
+	private int currentStock;
+	private int minimumStock;
+	private int maximumStock;
 		
-	public String getNome()
+	public String getName()
 	{
-		return nome;
+		return name;
 	}
 	
-	public boolean setNome(String nome)
+	public boolean setName(String name)
 	{
-		if (nome.length() > 0)
+		if (name.length() > 0)
 		{
-			this.nome = nome;
+			this.name = name;
 			return true;
 		}
 		else
@@ -32,16 +33,26 @@ public class Products
 		}	
 	}
 	
-	public String getMarca()
+	public int getCode()
 	{
-		return marca;
+		return code;
 	}
 	
-	public boolean setMarca(String marca)
+	public void setCode(int code)
 	{
-		if (marca.length() > 0)
+		this.code = code;
+	}
+	
+	public String getBrand()
+	{
+		return brand;
+	}
+	
+	public boolean setBrand(String brand)
+	{
+		if (brand.length() > 0)
 		{
-			this.marca = marca;
+			this.brand = brand;
 			return true;
 		}
 		else
@@ -52,26 +63,26 @@ public class Products
 	}
 	
 	
-	public float getPreco()
+	public float getPrice()
 	{
-		return preco;
+		return price;
 	}
 	
-	public void setPreco(float preco)
+	public void setPrice(float price)
 	{
-		this.preco = preco;
+		this.price = price;
 	}
 	
-	public String getTipo()
+	public String getCategory()
 	{
-		return tipo;
+		return category;
 	}
 	
-	public boolean setTipo(String tipo)
+	public boolean setCategory(String category)
 	{
-		if (tipo.length() > 0)
+		if (category.length() > 0)
 		{
-			this.tipo = tipo;
+			this.category = category;
 			return true;
 		}
 		else
@@ -83,51 +94,63 @@ public class Products
 		
 	}
 	
-	public int getQuantidadeTotal()
+	public int getCurrentStock()
 	{
-		return quantidadeTotal;
+		return currentStock;
 	}
 	
-	public void setQuantidadeTotal(int quantidadeTotal)
+	public void setCurrentStock(int currentStock)
 	{
-		this.quantidadeTotal = quantidadeTotal;
+		this.currentStock = currentStock;
 	}
 	
-	public int getQuantidadeMinima()
+	public int getMinimumStock()
 	{
-		return quantidadeMinima;
+		return minimumStock;
 	}
 	
-	public void setQuantidadeMinima(int quantidadeMinima)
+	public void setMinimumStock(int minimumStock)
 	{
-		this.quantidadeMinima = quantidadeMinima;
+		this.minimumStock = minimumStock;
 	}
 	
-	public int getQuantidadeMaxima()
+	public int getMaximumStock()
 	{
-		return quantidadeMaxima;
+		return maximumStock;
 	}
 	
-	public void setQuantidadeMaxima(int quantidadeMaxima)
+	public void setMaximumStock(int maximumStock)
 	{
-		this.quantidadeMaxima = quantidadeMaxima;
+		this.maximumStock = maximumStock;
 	}
 	
-	public void readData()
+	public void registerProduct()
 	{	
-		while( !setNome( Read.readString( "Nome:" ) ) );
+		while( !setName( Read.readString( "Nome:" ) ) );
 		
-		while( !setMarca( Read.readString( "Marca:" ) ) );
+		while( !setBrand( Read.readString( "Marca:" ) ) );
 		
-		while( !setTipo( Read.readString( "Categoria:" ) ) );
+		while( !setCategory( Read.readString( "Categoria:" ) ) );
 		
-		setPreco( Read.readFloat("Preço:") );
+		setPrice( Read.readFloat("Preço:") );
 		
-		setQuantidadeTotal( Read.readInt("Quantidade Total:") );
+		setCurrentStock( Read.readInt("Estoque Atual:") );
 		
-		setQuantidadeMinima( Read.readInt("Quantidade Minima:") );
+		setMinimumStock( Read.readInt("Minimo no estoque:") );
 		
-		setQuantidadeMaxima( Read.readInt("Quantidade Máxima:") );
+		setMaximumStock( Read.readInt("Maximo no estoque:") );
 		
+		Database.insertProduct(name, brand, price, category, currentStock, minimumStock, maximumStock);
+		
+	}
+	
+	public void productSale(int quantity)
+	{		
+		Database.lowerStock(this.code, quantity);
+	}
+	
+	public void deleteProduct()
+	{		
+		Database.deleteProductDatabase(getCode());
 	}
 }
