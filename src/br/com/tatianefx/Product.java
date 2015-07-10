@@ -144,13 +144,23 @@ public class Product
 		
 	}
 	
-	public void productSale(int quantity)
+	public void productSale(int code, int quantity)
 	{		
-		Database.lowerStock(this.code, quantity);
+		Database.lowerStock(code, quantity);
 	}
 	
 	public void deleteProduct()
 	{		
 		Database.deleteProductDatabase(getCode());
+	}
+	
+	public void showProduct()
+	{
+		System.out.println( "Código.......: " + getCode() );
+		System.out.println( "Nome.........: " + getName() );
+		System.out.println( "Marca........: " + getBrand() );
+		System.out.println( "Preço........: " + getPrice() );
+		System.out.println( "Categoria....: " + getCategory() );
+		System.out.println( "Estoque......: " + getCurrentStock() );
 	}
 }

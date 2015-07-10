@@ -124,19 +124,26 @@ public abstract class Database
 	{
 		try {
 			stmt = connection.createStatement();
+			Product soldProduct = findProduct(code);
 
-			product = "UPDATE products SET currentStock = currentStock - "
-					+ String.valueOf(quantity) + " WHERE code =" + code + ";";
+			if(soldProduct.getCurrentStock() >= quantity)
+			{
+				product = "UPDATE products SET currentStock = currentStock - "
+						+ String.valueOf(quantity) + " WHERE code =" + code + ";";
 
-			stmt.executeUpdate(product);
+				stmt.executeUpdate(product);
+
+				System.out.println("Venda realizada");
+			}
+			else {
+				System.out.println("Quantidade insuficiente em estoque");
+			}
 
 			stmt.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-
-		System.out.println("Venda realizada");
 	}
 
 	public static void replenishStock(int code, int quantity)
@@ -197,10 +204,87 @@ public abstract class Database
 		return productFound;
 	}
 
+	public static void showAllProducts()
+	{
+		try{
+			stmt = connection.createStatement();
+
+			ResultSet result = stmt.executeQuery( "SELECT * FROM products;" );
+
+			while ( result.next() ) {
+				int code = result.getInt("code");
+				String  name = result.getString("name");
+				String  brand = result.getString("brand");
+				float price = result.getFloat("price");
+				String  category = result.getString("category");
+				int currentStock  = result.getInt("currentStock");
+
+				System.out.println( "Código.......: " + code );
+				System.out.println( "Nome.........: " + name );
+				System.out.println( "Marca........: " + brand );
+				System.out.println( "Preço........: " + price );
+				System.out.println( "Categoria....: " + category );
+				System.out.println( "Estoque......: " + currentStock );
+
+				System.out.println();
+			}
+
+			result.close();
+			stmt.close();
+
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+			System.exit(0);
+		}
+		
+		System.out.println("Fim da lista de produtos.");
+	}
+	
+	public static void shoppingList()
+	{
+		try {
+			stmt = connection.createStatement();
+
+			ResultSet result = stmt.executeQuery( "SELECT * FROM products;" );
+
+			while ( result.next() ) {
+				int code = result.getInt("code");
+				String  name = result.getString("name");
+				String  brand = result.getString("brand");
+				String  category = result.getString("category");
+				int currentStock  = result.getInt("currentStock");
+				int minimumStock = result.getInt("minimumStock");
+				int maximumStock = result.getInt("maximumStock");
+
+				if(currentStock < minimumStock)
+				{	
+					System.out.println( "Código..........: " + code );
+					System.out.println( "Nome............: " + name );
+					System.out.println( "Marca...........: " + brand );
+					System.out.println( "Categoria.......: " + category );
+					System.out.println( "Quantidade......: " + (maximumStock - currentStock) );
+
+					System.out.println();
+				}
+			}
+
+			result.close();
+			stmt.close();
+
+		} catch ( Exception e ) {
+			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+			System.exit(0);
+		}
+		
+		System.out.println("Fim da lista de compras");
+	}
+
 	public static void closeConnection()
 	{
 		try {
+			
 			connection.close();
+			
 		} catch (SQLException e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
