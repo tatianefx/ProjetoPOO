@@ -1,10 +1,6 @@
 
 package br.com.tatianefx;
 
-import br.com.tatianefx.utils.Read;
-
-
-
 public class Main 
 {
 
@@ -33,8 +29,8 @@ public class Main
 		
 		//product2.showProduct();
 		
-		Product product2 = new Product();
-		product2.productSale(Read.readInt("Codigo:"), Read.readInt("Quantidade:"));	/*Teste venda de produto*/
+		//Product product2 = new Product();
+		//product2.productSale(Read.readInt("Codigo:"), Read.readInt("Quantidade:"));	/*Teste venda de produto*/
 		
 		//Products product3;										/*Teste busca produto*/
 		//product3 = Database.findProduct(Read.readInt("Codigo:")); /*Retorna um produto*/

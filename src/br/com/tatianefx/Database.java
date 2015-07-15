@@ -73,31 +73,62 @@ public abstract class Database
 	public static void insertProduct(String name, String brand, float price,
 			String category, int currentStock, int minimumStock,
 			int maximumStock)
-	{
+	{	
+		if(!(checkProductExist(name, brand))){
+			try {
+				stmt = connection.createStatement();
+
+				product = "INSERT INTO products (name, brand, price, category, currentStock, minimumStock, maximumStock)"
+						+ "VALUES "
+						+ "('" 
+						+ name + "','"
+						+ brand + "',"
+						+ String.valueOf(price) + ",'"
+						+ category + "',"
+						+ String.valueOf(currentStock) + ","
+						+ String.valueOf(minimumStock) + ","
+						+ String.valueOf(maximumStock) 
+						+ ");";
+
+				stmt.executeUpdate(product);
+
+				stmt.close();
+			} catch (Exception e) {
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+				System.exit(0);
+			}
+
+			System.out.println("Produto inserido com sucesso");
+		}		
+	}
+	
+	public static boolean checkProductExist(String name, String brand){
 		try {
 			stmt = connection.createStatement();
 
-			product = "INSERT INTO products (name, brand, price, category, currentStock, minimumStock, maximumStock)"
-					+ "VALUES "
-					+ "('" 
-					+ name + "','"
-					+ brand + "',"
-					+ String.valueOf(price) + ",'"
-					+ category + "',"
-					+ String.valueOf(currentStock) + ","
-					+ String.valueOf(minimumStock) + ","
-					+ String.valueOf(maximumStock) 
-					+ ");";
+			ResultSet result = stmt.executeQuery( "SELECT * FROM products;" );
 
-			stmt.executeUpdate(product);
+			while ( result.next() )
+			{
 
+				String  nameProduct = result.getString("name");
+				String  brandProduct = result.getString("brand");
+
+				if ((nameProduct.trim()).equals(name.trim()) && (brandProduct.trim()).equals(brand.trim()) )
+				{	
+					System.out.println("Produto já está cadastrado.");
+					return true;
+				}
+			}
+
+			result.close();
 			stmt.close();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-
-		System.out.println("Produto inserido com sucesso");
+		System.out.println("Produto nao está cadastrado.");
+		return false;
 	}
 
 	public static void deleteProductDatabase(int code)
