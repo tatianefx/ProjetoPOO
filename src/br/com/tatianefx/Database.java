@@ -114,7 +114,7 @@ public abstract class Database
 				String  nameProduct = result.getString("name");
 				String  brandProduct = result.getString("brand");
 
-				if ((nameProduct.trim()).equals(name.trim()) && (brandProduct.trim()).equals(brand.trim()) )
+				if ( (nameProduct.trim()).equalsIgnoreCase(name.trim()) && (brandProduct.trim()).equalsIgnoreCase(brand.trim()) )
 				{	
 					System.out.println("Produto já está cadastrado.");
 					return true;
@@ -278,7 +278,8 @@ public abstract class Database
 
 			ResultSet result = stmt.executeQuery( "SELECT * FROM products;" );
 
-			while ( result.next() ) {
+			while ( result.next() )
+			{
 				int code = result.getInt("code");
 				String  name = result.getString("name");
 				String  brand = result.getString("brand");
@@ -308,6 +309,25 @@ public abstract class Database
 		}
 		
 		System.out.println("Fim da lista de compras");
+	}
+	
+	public static void alterProductData(int code, String column, String newValue)
+	{
+		try {
+			stmt = connection.createStatement();
+			
+			product = "UPDATE products SET " + column + " = '" +
+					newValue + "' WHERE code =" + code + ";";
+			
+			stmt.executeUpdate(product);
+			stmt.close();
+			
+		} catch (Exception e) {
+			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+			System.exit(0);
+		}
+		
+		System.out.println("Alteração realizada");
 	}
 
 	public static void closeConnection()

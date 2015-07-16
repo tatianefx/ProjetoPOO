@@ -11,6 +11,10 @@ public class Main
 		
 		//Database.shoppingList();
 		
+		//Product product1 = new Product();							
+		//product1.changeTheProductName();							/*testa mudança de nome do produto*/
+		//product1.changeTheProductPrice();							/*testa mudança de preço do produto*/
+		
 /*		int tam  = 5;
 		Product product1;
 		

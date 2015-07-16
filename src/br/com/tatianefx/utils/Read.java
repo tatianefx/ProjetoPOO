@@ -14,13 +14,25 @@ public abstract class Read
 	
 	public static float readFloat(String message)
 	{
+		float numberFloat;
+		
 		System.out.println(message);
-		return scanner.nextFloat();
+		
+		numberFloat = scanner.nextFloat();
+		scanner.nextLine();
+		
+		return numberFloat;
 	}
 	
 	public static int readInt(String message)
 	{
+		int numberInt;
+		
 		System.out.println(message);
-		return scanner.nextInt();
+		
+		numberInt = scanner.nextInt();
+		scanner.nextLine();
+		
+		return numberInt;
 	}
 }

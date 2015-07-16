@@ -150,8 +150,43 @@ public class Product
 	}
 	
 	public void deleteProduct()
-	{		
-		Database.deleteProductDatabase(getCode());
+	{	
+		Database.deleteProductDatabase( Read.readInt("Codigo:") );
+	}
+	
+	public void changeTheProductName()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "name", Read.readString("Novo nome:") );
+	}
+	
+	public void changeTheProductBrand()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "brand", Read.readString("Nova marca:") );
+	}
+	
+	public void changeTheProductPrice()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "price", Read.readString("Novo preco:") );
+	}
+	
+	public void changeTheProductCategory()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "category", Read.readString("Nova categoria:") );
+	}
+	
+	public void changeTheProductCurrentStock()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "currentStock", Read.readString("Novo valor de estoque atual:") );
+	}
+	
+	public void changeTheProductMinimumStock()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "minimumStock", Read.readString("Novo valor de estoque minimo:") );
+	}
+	
+	public void changeTheProductMaximumStock()
+	{
+		Database.alterProductData( Read.readInt("Codigo:"), "maximumStock", Read.readString("Novo valor de estoque maximo:") );
 	}
 	
 	public void showProduct()
