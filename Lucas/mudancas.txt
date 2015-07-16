@@ -1,0 +1,3 @@
+Insere produto com interface grafica
+Se produto ja existe, mostra uma janela de alerta
+
