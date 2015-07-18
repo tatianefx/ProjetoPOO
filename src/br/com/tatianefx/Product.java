@@ -215,4 +215,16 @@ public class Product
 		System.out.println( "Categoria....: " + getCategory() );
 		System.out.println( "Estoque......: " + getCurrentStock() );
 	}
+	
+	public void showProductStock() {
+		System.out.println( "Código..........: " + code );
+		System.out.println( "Nome............: " + name );
+		System.out.println( "Marca...........: " + brand );
+		System.out.println( "Categoria.......: " + category );
+		System.out.println( "Quantidade......: " + (maximumStock - currentStock) );
+	}
+	
+	public boolean isStockLow() {
+		return currentStock < minimumStock;
+	}
 }

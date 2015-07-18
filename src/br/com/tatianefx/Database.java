@@ -256,21 +256,11 @@ public abstract class Database
 
 			while ( result.next() )
 			{
-				int code = result.getInt("code");
-				String  name = result.getString("name");
-				String  brand = result.getString("brand");
-				String  category = result.getString("category");
-				int currentStock  = result.getInt("currentStock");
-				int minimumStock = result.getInt("minimumStock");
-				int maximumStock = result.getInt("maximumStock");
+				Product product = new Product(result);
 
-				if(currentStock < minimumStock)
-				{	
-					System.out.println( "Código..........: " + code );
-					System.out.println( "Nome............: " + name );
-					System.out.println( "Marca...........: " + brand );
-					System.out.println( "Categoria.......: " + category );
-					System.out.println( "Quantidade......: " + (maximumStock - currentStock) );
+				if(product.isStockLow())
+				{
+					product.showProductStock();
 
 					System.out.println();
 				}
