@@ -106,28 +106,25 @@ public abstract class Database
 		try {
 			stmt = connection.createStatement();
 
-			ResultSet result = stmt.executeQuery( "SELECT * FROM products;" );
+			ResultSet result = stmt.executeQuery( "SELECT * FROM products "
+					+ "WHERE name = '" + name + "' AND brand = '" + brand + "';" );
 
-			while ( result.next() )
-			{
-
-				String  nameProduct = result.getString("name");
-				String  brandProduct = result.getString("brand");
-
-				if ( (nameProduct.trim()).equalsIgnoreCase(name.trim()) && (brandProduct.trim()).equalsIgnoreCase(brand.trim()) )
-				{	
-					System.out.println("Produto já está cadastrado.");
-					return true;
-				}
-			}
-
+			boolean productExists = result.first();
+			
 			result.close();
 			stmt.close();
-		} catch (Exception e) {
+			
+			if(productExists) {
+				System.out.println("Produto já está cadastrado.");
+			}
+			
+			return productExists;
+			
+		} catch (SQLException e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			System.exit(0);
 		}
-		System.out.println("Produto nao está cadastrado.");
+		
 		return false;
 	}
 
@@ -210,17 +207,7 @@ public abstract class Database
 			ResultSet productFields = stmt.executeQuery(product);
 
 			if (productFields.next()) {
-				productFound.setCode(code);
-				productFound.setName(productFields.getString("name"));
-				productFound.setBrand(productFields.getString("brand"));
-				productFound.setPrice(productFields.getFloat("price"));
-				productFound.setCategory(productFields.getString("category"));
-				productFound.setCurrentStock(productFields
-						.getInt("currentStock"));
-				productFound.setMinimumStock(productFields
-						.getInt("minimumStock"));
-				productFound.setMaximumStock(productFields
-						.getInt("maximumStock"));
+				productFound = new Product(productFields);
 			}
 
 			stmt.close();
