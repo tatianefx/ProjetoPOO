@@ -1,6 +1,9 @@
 
 package br.com.tatianefx;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import br.com.tatianefx.utils.Read;
 
 public class Product
@@ -13,6 +16,20 @@ public class Product
 	private int currentStock;
 	private int minimumStock;
 	private int maximumStock;
+	
+	public Product() {
+	}
+	
+	public Product(ResultSet resultSet) throws SQLException{
+		code = resultSet.getInt("code");
+		name = resultSet.getString("name");
+		brand = resultSet.getString("brand");
+		price = resultSet.getFloat("price");
+		category = resultSet.getString("category");
+		currentStock = resultSet.getInt("currentStock");
+		minimumStock = resultSet.getInt("minimumStock");
+		maximumStock = resultSet.getInt("maximumStock");
+	}
 		
 	public String getName()
 	{

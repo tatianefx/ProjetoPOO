@@ -243,19 +243,8 @@ public abstract class Database
 			ResultSet result = stmt.executeQuery( "SELECT * FROM products;" );
 
 			while ( result.next() ) {
-				int code = result.getInt("code");
-				String  name = result.getString("name");
-				String  brand = result.getString("brand");
-				float price = result.getFloat("price");
-				String  category = result.getString("category");
-				int currentStock  = result.getInt("currentStock");
-
-				System.out.println( "Código.......: " + code );
-				System.out.println( "Nome.........: " + name );
-				System.out.println( "Marca........: " + brand );
-				System.out.println( "Preço........: " + price );
-				System.out.println( "Categoria....: " + category );
-				System.out.println( "Estoque......: " + currentStock );
+				Product product = new Product(result);
+				product.showProduct();
 
 				System.out.println();
 			}
@@ -263,7 +252,7 @@ public abstract class Database
 			result.close();
 			stmt.close();
 
-		} catch ( Exception e ) {
+		} catch ( SQLException e ) {
 			System.err.println( e.getClass().getName()+": "+ e.getMessage() );
 			System.exit(0);
 		}
