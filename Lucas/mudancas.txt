@@ -1,0 +1,7 @@
+Tatiana:
+Verifica se produto ja existe
+Metodos para alterar dados dos produtos
+
+Lucas:
+Insere produto pela interface grafica
+Se produto ja existe, mostra uma janela de alerta
