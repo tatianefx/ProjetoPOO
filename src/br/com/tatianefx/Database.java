@@ -196,7 +196,7 @@ public abstract class Database
 
 	public static Product findProduct(int code)
 	{
-		Product productFound = new Product();
+		Product productFound = null;
 
 		try {
 			stmt = connection.createStatement();
